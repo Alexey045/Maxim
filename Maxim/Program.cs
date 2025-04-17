@@ -36,9 +36,7 @@ namespace Maxim
 					}
 				}
 
-				Console.WriteLine(input.Length % 2 == 0
-					? string.Concat(Reverse(input[..(input.Length / 2)]), Reverse(input[(input.Length / 2)..]))
-					: string.Concat(Reverse(input), input));
+				Console.WriteLine(result);
 
 				WriteDictionary(symbolCount);
 			}
