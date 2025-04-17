@@ -17,8 +17,15 @@ namespace Maxim
 			else
 			{
 				var symbolCount = new Dictionary<char, int>();
-				foreach (var symbol in input)
+
+				var result = input.Length % 2 == 0
+					? string.Concat(Reverse(input[..(input.Length / 2)]), Reverse(input[(input.Length / 2)..]))
+					: string.Concat(Reverse(input), input);
+
+				for (var i = 0; i < result.Length; i++)
 				{
+					var symbol = result[i];
+
 					if (symbolCount.ContainsKey(symbol))
 					{
 						symbolCount[symbol]++;
