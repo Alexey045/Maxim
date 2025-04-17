@@ -54,7 +54,9 @@ namespace Maxim
 
 				WriteDictionary(symbolCount);
 
-				Console.WriteLine($"Самая длинная подстрока начинающаяся и заканчивающаяся на гласную: {result.Substring(longestVowelsStringStart, longestVowelsStringEnd - longestVowelsStringStart + 1)}");
+				Console.WriteLine($"Самая длинная подстрока начинающаяся и заканчивающаяся на гласную: {((longestVowelsStringStart != -1) ? result.Substring(longestVowelsStringStart, longestVowelsStringEnd - longestVowelsStringStart + 1) : "ОТСУТСТВУЕТ")}");
+
+				ChooseSortingAlgorithm(result);
 			}
 		}
 
@@ -92,6 +94,73 @@ namespace Maxim
 			{
 				Console.WriteLine($"{item.Key} - {item.Value}");
 			}
+		}
+
+		static void ChooseSortingAlgorithm(string input)
+		{
+			while (true)
+			{
+				Console.WriteLine("Выберите метод сортировки: 1 - Quicksort, 2 - Tree sort");
+
+				switch (Console.ReadLine())
+				{
+					case "1":
+						var symbols = input.ToCharArray();
+						QuickSort(symbols, 0, input.Length - 1);
+						Console.WriteLine($"Результат QuickSort: {new string(symbols)}");
+						return;
+					case "2":
+						TreeSort(input);
+						return;
+					default:
+						continue;
+				}
+			}
+		}
+
+		static void QuickSort(char[] arr, int start, int end)
+		{
+			if (start < end)
+			{
+				var pivot = Partition(arr, start, end);
+
+				QuickSort(arr, start, pivot - 1);
+				QuickSort(arr, pivot + 1, end);
+			}
+		}
+		static int Partition(char[] arr, int start, int end)
+		{
+			var random = new Random();
+			var pivot = random.Next(start, end);
+
+			Swap(arr, pivot, end); // move to the highest
+
+			int i = start - 1;
+
+			for (int j = start; j < end; j++)
+			{
+				if (arr[j] < arr[pivot])
+				{
+					i++;
+					Swap(arr, i, j);
+				}
+			}
+
+			Swap(arr, end, i + 1);
+
+			return i + 1;
+		}
+
+		static void Swap(char[] arr, int i, int j)
+		{
+			(arr[i], arr[j]) = (arr[j], arr[i]);
+		}
+
+
+
+		static string TreeSort(string input)
+		{
+			return input;
 		}
 	}
 }
