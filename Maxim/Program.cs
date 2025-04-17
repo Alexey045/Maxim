@@ -98,6 +98,7 @@ namespace Maxim
 
 		static void ChooseSortingAlgorithm(string input)
 		{
+			var symbols = input.ToCharArray();
 			while (true)
 			{
 				Console.WriteLine("Выберите метод сортировки: 1 - Quicksort, 2 - Tree sort");
@@ -105,12 +106,12 @@ namespace Maxim
 				switch (Console.ReadLine())
 				{
 					case "1":
-						var symbols = input.ToCharArray();
 						QuickSort(symbols, 0, input.Length - 1);
 						Console.WriteLine($"Результат QuickSort: {new string(symbols)}");
 						return;
 					case "2":
-						TreeSort(input);
+						TreeSort(symbols);
+						Console.WriteLine($"Результат TreeSort: {new string(symbols)}");
 						return;
 					default:
 						continue;
@@ -128,6 +129,7 @@ namespace Maxim
 				QuickSort(arr, pivot + 1, end);
 			}
 		}
+
 		static int Partition(char[] arr, int start, int end)
 		{
 			var random = new Random();
@@ -156,11 +158,77 @@ namespace Maxim
 			(arr[i], arr[j]) = (arr[j], arr[i]);
 		}
 
-
-
-		static string TreeSort(string input)
+		static void TreeSort(char[] arr)
 		{
-			return input;
+			var tree = new Tree();
+			tree.TreeInsert(arr);
+			var index = 0;
+			Tree.OrderTree(tree.root, arr, ref index);
+		}
+	}
+
+	internal class Node
+	{
+		public char value;
+
+		public int count;
+
+		public Node? left, right;
+
+		public Node(char value)
+		{
+			this.value = value;
+			left = null;
+			right = null;
+			count = 1;
+		}
+	}
+
+	internal class Tree()
+	{
+		public Node? root;
+
+		Node InsertValue(Node root, char key)
+		{
+			if (root == null)
+			{
+				root = new Node(key);
+				return root;
+			}
+
+			if (key < root.value)
+				root.left = InsertValue(root.left, key);
+			else if (key > root.value)
+				root.right = InsertValue(root.right, key);
+			else
+			{
+				root.count++;
+			}
+
+			return root;
+		}
+
+		public static void OrderTree(Node root, char[] arr, ref int index)
+		{
+			if (root != null)
+			{
+				OrderTree(root.left, arr, ref index);
+
+				for (var i = 0; i < root.count; i++)
+				{
+					arr[index++] = root.value;
+				}
+
+				OrderTree(root.right, arr, ref index);
+			}
+		}
+
+		public void TreeInsert(char[] arr)
+		{
+			for (int i = 0; i < arr.Length; i++)
+			{
+				root = InsertValue(root, arr[i]);
+			}
 		}
 	}
 }
