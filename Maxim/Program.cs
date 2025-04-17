@@ -6,6 +6,11 @@ namespace Maxim
 	{
 		static void Main(string[] args)
 		{
+
+			var vowels = new HashSet<char>(['a', 'e', 'i', 'o', 'u', 'y']);
+			var longestVowelsStringStart = -1;
+			var longestVowelsStringEnd = -1;
+
 			var input = Console.ReadLine();
 
 			var badSymbols = IsLowerAscii(input);
@@ -34,11 +39,22 @@ namespace Maxim
 					{
 						symbolCount[symbol] = 1;
 					}
+
+					if (vowels.Contains(symbol))
+					{
+						if (longestVowelsStringStart == -1)
+						{
+							longestVowelsStringStart = i;
+						}
+						longestVowelsStringEnd = i;
+					}
 				}
 
 				Console.WriteLine(result);
 
 				WriteDictionary(symbolCount);
+
+				Console.WriteLine($"Самая длинная подстрока начинающаяся и заканчивающаяся на гласную: {result.Substring(longestVowelsStringStart, longestVowelsStringEnd - longestVowelsStringStart + 1)}");
 			}
 		}
 
