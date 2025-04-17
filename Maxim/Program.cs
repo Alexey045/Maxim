@@ -50,7 +50,7 @@ namespace Maxim
 					}
 				}
 
-				Console.WriteLine(result);
+				Console.WriteLine($"Обработанная строка: {result}");
 
 				WriteDictionary(symbolCount);
 
