@@ -4,9 +4,10 @@ namespace Maxim
 {
 	internal class Program
 	{
-		static void Main(string[] args)
-		{
+		static HttpClient client = new HttpClient();
 
+		static async Task Main(string[] args)
+		{
 			var vowels = new HashSet<char>(['a', 'e', 'i', 'o', 'u', 'y']);
 			var longestVowelsStringStart = -1;
 			var longestVowelsStringEnd = -1;
@@ -57,6 +58,8 @@ namespace Maxim
 				Console.WriteLine($"Самая длинная подстрока начинающаяся и заканчивающаяся на гласную: {((longestVowelsStringStart != -1) ? result.Substring(longestVowelsStringStart, longestVowelsStringEnd - longestVowelsStringStart + 1) : "ОТСУТСТВУЕТ")}");
 
 				ChooseSortingAlgorithm(result);
+
+				await RemoveRandomSymbol(result);
 			}
 		}
 
@@ -164,6 +167,22 @@ namespace Maxim
 			tree.TreeInsert(arr);
 			var index = 0;
 			Tree.OrderTree(tree.root, arr, ref index);
+		}
+
+		static async Task RemoveRandomSymbol(string result)
+		{
+			int value;
+			var response = await client.GetAsync($"http://www.randomnumberapi.com/api/v1.0/random?min=0&max={result.Length}&count=1");
+			if (response.IsSuccessStatusCode)
+			{
+				value = int.Parse((await response.Content.ReadAsStringAsync()).Trim().Trim(['[', ']']));
+			}
+			else
+			{
+				var random = new Random();
+				value = random.Next(0, result.Length);
+			}
+			Console.WriteLine($"Обработанная строка с удаленным {value + 1} символом: {result.Remove(value, 1)}");
 		}
 	}
 
