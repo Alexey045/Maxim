@@ -16,9 +16,31 @@ namespace Maxim
 			}
 			else
 			{
+				var symbolCount = new Dictionary<char, int>();
+
+				var result = input.Length % 2 == 0
+					? string.Concat(Reverse(input[..(input.Length / 2)]), Reverse(input[(input.Length / 2)..]))
+					: string.Concat(Reverse(input), input);
+
+				for (var i = 0; i < result.Length; i++)
+				{
+					var symbol = result[i];
+
+					if (symbolCount.ContainsKey(symbol))
+					{
+						symbolCount[symbol]++;
+					}
+					else
+					{
+						symbolCount[symbol] = 1;
+					}
+				}
+
 				Console.WriteLine(input.Length % 2 == 0
 					? string.Concat(Reverse(input[..(input.Length / 2)]), Reverse(input[(input.Length / 2)..]))
 					: string.Concat(Reverse(input), input));
+
+				WriteDictionary(symbolCount);
 			}
 		}
 
@@ -47,6 +69,15 @@ namespace Maxim
 			}
 
 			return result;
+		}
+
+		static void WriteDictionary(Dictionary<char, int> dict)
+		{
+			Console.WriteLine("Количество входящих символов и их количество:");
+			foreach (var item in dict)
+			{
+				Console.WriteLine($"{item.Key} - {item.Value}");
+			}
 		}
 	}
 }
