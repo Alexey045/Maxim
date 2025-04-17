@@ -13,7 +13,7 @@ namespace Maxim
 				: string.Concat(Reverse(input), input));
 		}
 
-		static string Reverse(string input)
+		static string Reverse(string input) // Task1
 		{
 			var sb = new StringBuilder(input.Length);
 
