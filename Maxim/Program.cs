@@ -54,7 +54,7 @@ namespace Maxim
 
 				WriteDictionary(symbolCount);
 
-				Console.WriteLine($"Самая длинная подстрока начинающаяся и заканчивающаяся на гласную: {result.Substring(longestVowelsStringStart, longestVowelsStringEnd - longestVowelsStringStart + 1)}");
+				Console.WriteLine($"Самая длинная подстрока начинающаяся и заканчивающаяся на гласную: {((longestVowelsStringStart != -1) ? result.Substring(longestVowelsStringStart, longestVowelsStringEnd - longestVowelsStringStart + 1) : "ОТСУТСТВУЕТ")}");
 			}
 		}
 
