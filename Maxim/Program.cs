@@ -8,7 +8,7 @@ namespace Maxim
 
 		static async Task Main(string[] args)
 		{
-			var vowels = new HashSet<char>(['a', 'e', 'i', 'o', 'u', 'y']);
+			var vowels = new HashSet<char>(new char[] { 'a', 'e', 'i', 'o', 'u', 'y' });
 			var longestVowelsStringStart = -1;
 			var longestVowelsStringEnd = -1;
 
@@ -81,7 +81,7 @@ namespace Maxim
 
 			foreach (char c in input)
 			{
-				if (!char.IsAsciiLetterLower(c))
+				if ('a' > c || c > 'z')
 				{
 					result.Add(c);
 				}
@@ -175,7 +175,7 @@ namespace Maxim
 			var response = await client.GetAsync($"http://www.randomnumberapi.com/api/v1.0/random?min=0&max={result.Length}&count=1");
 			if (response.IsSuccessStatusCode)
 			{
-				value = int.Parse((await response.Content.ReadAsStringAsync()).Trim().Trim(['[', ']']));
+				value = int.Parse((await response.Content.ReadAsStringAsync()).Trim().Trim(new char[] { '[', ']' }));
 			}
 			else
 			{
@@ -203,9 +203,14 @@ namespace Maxim
 		}
 	}
 
-	internal class Tree()
+	internal class Tree
 	{
 		public Node? root;
+
+		public Tree()
+		{
+			root = null;
+		}
 
 		Node InsertValue(Node root, char key)
 		{
