@@ -7,7 +7,7 @@ namespace Maxim
 		static void Main(string[] args)
 		{
 
-			var vowels = new HashSet<char>(['a', 'e', 'i', 'o', 'u', 'y']);
+			var vowels = new HashSet<char>(new char[] { 'a', 'e', 'i', 'o', 'u', 'y' });
 			var longestVowelsStringStart = -1;
 			var longestVowelsStringEnd = -1;
 
@@ -76,7 +76,7 @@ namespace Maxim
 
 			foreach (char c in input)
 			{
-				if (!char.IsAsciiLetterLower(c))
+				if ('a' > c || c > 'z')
 				{
 					result.Add(c);
 				}
