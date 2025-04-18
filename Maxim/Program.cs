@@ -40,7 +40,7 @@ namespace Maxim
 
 			foreach (char c in input)
 			{
-				if (!char.IsAsciiLetterLower(c))
+				if ('a' > c || c > 'z')
 				{
 					result.Add(c);
 				}
