@@ -171,18 +171,25 @@ namespace Maxim
 
 		static async Task RemoveRandomSymbol(string result)
 		{
-			int value;
-			var response = await client.GetAsync($"http://www.randomnumberapi.com/api/v1.0/random?min=0&max={result.Length}&count=1");
-			if (response.IsSuccessStatusCode)
+			if (result.Length > 0)
 			{
-				value = int.Parse((await response.Content.ReadAsStringAsync()).Trim().Trim(new char[] { '[', ']' }));
+				int value;
+				var response = await client.GetAsync($"http://www.randomnumberapi.com/api/v1.0/random?min=0&max={result.Length}&count=1");
+				if (response.IsSuccessStatusCode)
+				{
+					value = int.Parse((await response.Content.ReadAsStringAsync()).Trim().Trim(new char[] { '[', ']' }));
+				}
+				else
+				{
+					var random = new Random();
+					value = random.Next(0, result.Length);
+				}
+				Console.WriteLine($"Обработанная строка с удаленным {value + 1} символом: {result.Remove(value, 1)}");
 			}
 			else
 			{
-				var random = new Random();
-				value = random.Next(0, result.Length);
+				Console.WriteLine("Невозможно удалить символ из пустой строки");
 			}
-			Console.WriteLine($"Обработанная строка с удаленным {value + 1} символом: {result.Remove(value, 1)}");
 		}
 	}
 
