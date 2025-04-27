@@ -8,9 +8,18 @@ namespace Maxim
 		{
 			var input = Console.ReadLine();
 
-			Console.WriteLine(input.Length % 2 == 0
-				? string.Concat(Reverse(input[..(input.Length / 2)]), Reverse(input[(input.Length / 2)..]))
-				: string.Concat(Reverse(input), input));
+			var badSymbols = IsLowerAscii(input);
+
+			if (badSymbols.Count > 0)
+			{
+				Console.WriteLine($"Были введены неподходящие символы: {string.Join("", badSymbols)}");
+			}
+			else
+			{
+				Console.WriteLine(input.Length % 2 == 0
+					? string.Concat(Reverse(input[..(input.Length / 2)]), Reverse(input[(input.Length / 2)..]))
+					: string.Concat(Reverse(input), input));
+			}
 		}
 
 		static string Reverse(string input)
@@ -23,6 +32,21 @@ namespace Maxim
 			}
 
 			return sb.ToString();
+		}
+
+		static List<char> IsLowerAscii(string input)
+		{
+			var result = new List<char>();
+
+			foreach (char c in input)
+			{
+				if ('a' > c || c > 'z')
+				{
+					result.Add(c);
+				}
+			}
+
+			return result;
 		}
 	}
 }
