@@ -136,7 +136,7 @@ namespace Maxim
 		static int Partition(char[] arr, int start, int end)
 		{
 			var random = new Random();
-			var pivot = random.Next(start, end);
+			var pivot = random.Next(start, end + 1);
 
 			Swap(arr, pivot, end); // move to the highest
 
@@ -144,7 +144,7 @@ namespace Maxim
 
 			for (int j = start; j < end; j++)
 			{
-				if (arr[j] < arr[pivot])
+				if (arr[j] < arr[end])
 				{
 					i++;
 					Swap(arr, i, j);
