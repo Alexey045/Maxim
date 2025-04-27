@@ -219,7 +219,7 @@ namespace Maxim
 			root = null;
 		}
 
-		Node InsertValue(Node root, char key)
+		Node InsertValue(Node? root, char key)
 		{
 			if (root == null)
 			{
@@ -239,7 +239,7 @@ namespace Maxim
 			return root;
 		}
 
-		public static void OrderTree(Node root, char[] arr, ref int index)
+		public static void OrderTree(Node? root, char[] arr, ref int index)
 		{
 			if (root != null)
 			{
